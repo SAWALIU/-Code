@@ -1,0 +1,68 @@
+#!usr/bin/env python3
+# coding:utf-8
+#!usr/bin/env python3
+#!usr/bin/env python3
+# coding:utf-8
+#!usr/bin/env python3
+# coding:utf-8
+import os
+from bs4 import BeautifulSoup
+import re
+import pandas as pd
+import codecs
+fp=open("「北朝鮮」を含む記事のコメント","r",encoding="utf-8")
+path="Desktop/「北朝鮮」を含む記事のコメント"
+files=os.listdir(path)
+isdir=os.path.isdir("Desktop/「北朝鮮」を含む記事のコメント")
+b=os.listdir("Desktop/「北朝鮮」を含む記事のコメント")
+fm=open ("削除リスト.txt","r",encoding="utf-8")
+a=fm.read()
+ftt=open("軍事・安保争点コメント内容.txt","w",encoding="utf-8")
+pat_a=re.compile(r"[0-9]{7}")
+coder_a=pat_a.findall(a)
+pat_b=re.compile(r"[0-9]{7}")
+coder_b=pat_b.findall(str(b))
+print(len(coder_a))
+#print(len(coder_b))
+def sacoder (m,n):
+    return set(m)&set(n)
+y=sacoder (coder_b,coder_a)
+print(len(y))
+m="Comments_for_news"
+b=".txt"
+samecode_list=[]
+for i in coder_a:
+    if i in y:
+        samcode=m+str(i)+b
+        samecode_list.append(samcode)
+print(len(samecode_list))
+
+#for aa in samecode_list:
+    #print("<h1>",aa,"</h1>")
+   # ftt.write("<h1></h1>")
+    #ftt.write(str(aa))
+
+
+def diff(p,q):
+    return set(p)-set(q)
+k22=diff(coder_a,y)
+print(k22)
+
+t=0
+ftt=open("軍事・安保争点コメント内容.txt","w",encoding="utf-8")
+for file in files:
+    if not os.path.isdir(file):
+        if file in samecode_list:
+            with codecs.open(path + "/" + file, "r", "utf-8", "ignore") as f:
+                tmp = f.read()
+                pattern_mother=re.compile(r"(?<=--------------------------).+?(?=Y \d{1,4}  N \d{1,4})",re.S)
+                mothers=pattern_mother.findall(tmp)
+                pattern_mother_clear=re.compile(r".+日前",re.S)
+                ftt.write("<h2>"+file+"</h2>\n")
+                for mcmt in mothers:
+                    mcmt=pattern_mother_clear.sub("",mcmt).replace("\n","")
+                    ftt.write("\n<h3>"+str(t)+"</h3>\n")
+                    t+=1
+                    ftt.write(mcmt+"\n")
+ftt.close()
+print("done")
