@@ -1,0 +1,20 @@
+def jaccard_sim(list_a,list_b):
+    set_intersection = set.intersection(*[set(list_a),set(list_b)])
+    num_intersection = len(set_intersection)
+    num_listA = len(list_a)
+    num_listB = len(list_b)
+    try:
+        return float(2.0 * num_intersection) / (num_listA + num_listB)
+    except ZeroDivisionError:
+        return 1.0 
+ 
+
+#fp=open("Desktop/yahoo comments.txt","r",encoding="utf-8")
+#data=fp.read().split(" or ")
+#fp2=open("","r",encoding="utf-8")
+#data2=fp.read().split(" or ")
+#if __name__== '__main__':
+    list_a =data 
+    list_b = data2
+    jac = jaccard_sim(list_a,list_b) 
+    #print(jac) "'
