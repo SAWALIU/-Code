@@ -1,0 +1,52 @@
+import tweepy
+import TwitterAPIKey
+import datetime,time
+
+CK=TwitterAPIKey.CONSUMER_KEY
+CS=TwitterAPIKey.CONSUMER_SECRET
+AT=TwitterAPIKey.ACCESS_TOKEN
+AS=TwitterAPIKey.ACCESS_TOKEN_SECRET
+
+auth=tweepy.OAuthHandler(CK,CS)
+auth.set_access_token(AT,AS)
+api=tweepy.API(auth)
+
+keyword="北朝鮮"
+search_count=100
+def search_nk():
+    search_result=api.search(keyword,count=search_count)
+print(search_nk)
+
+ーーーーーーーーーーーーーーーーーーーーーーーーーーーー
+import tweepy
+import TwitterAPIKey
+import datetime,time
+
+CK=TwitterAPIKey.CONSUMER_KEY
+CS=TwitterAPIKey.CONSUMER_SECRET
+AT=TwitterAPIKey.ACCESS_TOKEN
+AS=TwitterAPIKey.ACCESS_TOKEN_SECRET
+
+auth=tweepy.OAuthHandler(CK,CS)
+auth.set_access_token(AT,AS)
+api=tweepy.API(auth)
+
+keyword="北朝鮮　"
+search_count=100
+def search_nk():
+    search_result=api.search(keyword,count=search_count)
+    f=open("北朝鮮に関するtweet内容.txt","w",encoding="utf-8")
+    for tw in search_result:
+        f.write(tw.text+"\n")
+    f.close()    
+while True:
+    now=datetime.datetime.now()
+    m=[10,30,50]
+    if now.minute in m:
+        search_nk()
+        time.sleep(50)
+    else:
+        time.sleep(60)
+
+
+
