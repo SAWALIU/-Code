@@ -1,0 +1,27 @@
+#!usr/bin/env python3
+# coding:utf-8
+#!usr/bin/env python3
+# coding:utf-8
+import os
+from bs4 import BeautifulSoup
+import re
+import codecs
+import pandas as pd
+fp=open("Desktop/コメント有記事.txt","r",encoding="utf-8")
+data=fp.read().split("◇")
+#print(len(data))
+fm=open ("争点：会談関連","r",encoding="utf-8")
+checkdata=fm.read().split("\n")
+print(len(checkdata))
+t=0
+for i in data:
+    try:
+        ttl=re.search(r"(?<=<h3>).+(?=</h3>)",i).group()
+    except:
+        ttl=""
+    if ttl in checkdata:
+        print(i)
+        #t+=1
+        #checkdata.remove(ttl)
+#print(checkdata)
+        
